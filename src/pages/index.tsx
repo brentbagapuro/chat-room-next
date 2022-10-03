@@ -28,7 +28,7 @@ export default function IndexPage() {
       <div className="chat_room">
         <div className="chat_messages">
           {messages?.data ? (
-            <>
+            <div style={{ height: '100%' }}>
               {
                 // @ts-ignore
                 messages?.data?.map((message: Message) => {
@@ -39,7 +39,7 @@ export default function IndexPage() {
                   );
                 })
               }
-            </>
+            </div>
           ) : (
             <p>Loading...</p>
           )}
