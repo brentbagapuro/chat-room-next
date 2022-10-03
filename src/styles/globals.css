@@ -36,9 +36,12 @@ a {
   width: 100%;
   height: 30rem;
   padding: 1em;
+}
+
+.messages_container {
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  flex-direction: column-reverse;
   overflow-y: scroll;
 }
 

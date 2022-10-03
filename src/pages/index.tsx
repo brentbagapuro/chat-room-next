@@ -28,7 +28,7 @@ export default function IndexPage() {
       <div className="chat_room">
         <div className="chat_messages">
           {messages?.data ? (
-            <div style={{ height: '100%' }}>
+            <div className="messages_container">
               {
                 // @ts-ignore
                 messages?.data?.map((message: Message) => {
