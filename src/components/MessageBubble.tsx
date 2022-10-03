@@ -19,7 +19,7 @@ const MessageBubble = ({ message }: Props) => {
     const hoursBetweenDates = msBetweenDates / (60 * 60 * 1000);
 
     if (hoursBetweenDates < 24) {
-      return moment(time).startOf('hour').fromNow();
+      return moment(time).startOf('minute').fromNow();
     } else {
       return moment(time).format('ddd MMM Do -  h:mm a');
     }
