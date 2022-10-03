@@ -29,13 +29,16 @@ export default function IndexPage() {
         <div className="chat_messages">
           {messages?.data ? (
             <>
-              {messages?.data?.map((message: Message) => {
-                return (
-                  <div key={message._id}>
-                    <MessageBubble message={message} />
-                  </div>
-                );
-              })}
+              {
+                // @ts-ignore
+                messages?.data?.map((message: Message) => {
+                  return (
+                    <div key={message._id}>
+                      <MessageBubble message={message} />
+                    </div>
+                  );
+                })
+              }
             </>
           ) : (
             <p>Loading...</p>
