@@ -3,8 +3,18 @@ import { z } from 'zod';
 import message from '../../models/Message';
 import dbConnect from '../../utils/dbConnect';
 
-export const createMessageRouter = t.router({
-  createMessage: t.procedure
+export const msgRouter = t.router({
+  list: t.procedure.query(async () => {
+    try {
+      dbConnect();
+      const messages = await message.find();
+
+      return messages;
+    } catch (err) {
+      return err;
+    }
+  }),
+  add: t.procedure
     .input(
       z.object({
         message: z.string(),

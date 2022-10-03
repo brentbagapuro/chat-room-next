@@ -1,12 +1,8 @@
 import { t } from '../trpc';
-import { greetingRouter } from './greeting';
-import { createMessageRouter } from './createMessage';
-import { getMessagesRouter } from './getMessages';
+import { msgRouter } from './msg';
 
-export const appRouter = t.mergeRouters(
-  greetingRouter,
-  createMessageRouter,
-  getMessagesRouter
-);
+export const appRouter = t.router({
+  msg: msgRouter,
+});
 
 export type AppRouter = typeof appRouter;

@@ -13,8 +13,8 @@ export default function IndexPage() {
   const [message, setMessage] = useState<string>('');
 
   // const result = trpc.greeting.useQuery({ name: 'test' });
-  const messages = trpc.getMessages.useQuery();
-  const mutation = trpc.createMessage.useMutation();
+  const messages = trpc.msg.list.useQuery();
+  const mutation = trpc.msg.add.useMutation();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
