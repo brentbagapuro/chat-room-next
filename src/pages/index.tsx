@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { trpc } from '../utils/trpc';
 import MessageBubble from '../components/MessageBubble';
 
@@ -11,8 +11,15 @@ interface Message {
 
 export default function IndexPage() {
   const [message, setMessage] = useState<string>('');
+  const messagesContainer = useRef<HTMLDivElement>(null);
 
-  // const result = trpc.greeting.useQuery({ name: 'test' });
+  useEffect(() => {
+    messagesContainer?.current?.scrollTo(
+      0,
+      messagesContainer?.current?.scrollHeight
+    );
+  }, [messagesContainer]);
+
   const messages = trpc.msg.list.useQuery();
   const mutation = trpc.msg.add.useMutation();
 
@@ -28,7 +35,7 @@ export default function IndexPage() {
       <div className="chat_room">
         <div className="chat_messages">
           {messages?.data ? (
-            <div className="messages_container">
+            <div className="messages_container" ref={messagesContainer}>
               {
                 // @ts-ignore
                 messages?.data?.map((message: Message) => {
