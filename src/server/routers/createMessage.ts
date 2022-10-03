@@ -1,12 +1,10 @@
 import { t } from '../trpc';
 import { z } from 'zod';
-import dbConnect from '../../utils/dbConnect';
 import message from '../../models/Message';
+import dbConnect from '../../utils/dbConnect';
 
-dbConnect()
-
-export const createMessageRouter = async () => {
-    createMessage: t.procedure
+export const createMessageRouter = t.router({
+  createMessage: t.procedure
     .input(
       z.object({
         message: z.string(),
@@ -14,20 +12,12 @@ export const createMessageRouter = async () => {
     )
     .mutation(async ({ input }) => {
       try {
+        dbConnect();
         const newMessage = await message.create(input);
 
-        return {
-          body: {
-            message: 'ok',
-            data: newMessage,
-          },
-        };
+        return newMessage;
       } catch (err) {
-        return {
-          body: {
-            message: err,
-          },
-        };
+        return err;
       }
     }),
-}
+});
