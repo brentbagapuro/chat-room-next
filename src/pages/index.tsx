@@ -9,25 +9,35 @@ interface Message {
   updatedAt: string;
 }
 
+interface Messages {
+  data: Message[] | undefined;
+}
+
 export default function IndexPage() {
   const [message, setMessage] = useState<string>('');
   const messagesContainer = useRef<HTMLDivElement>(null);
+
+  const utils = trpc.useContext();
+
+  const messages: Messages = trpc.msg.list.useQuery();
+  const mutation = trpc.msg.add.useMutation({
+    onSuccess() {
+      utils.msg.list.invalidate();
+      setMessage('');
+    },
+  });
 
   useEffect(() => {
     messagesContainer?.current?.scrollTo(
       0,
       messagesContainer?.current?.scrollHeight
     );
-  }, [messagesContainer]);
-
-  const messages = trpc.msg.list.useQuery();
-  const mutation = trpc.msg.add.useMutation();
+  }, [messagesContainer, messages.data]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     mutation.mutate({ message });
-    window.location.reload();
   };
 
   return (
@@ -36,16 +46,13 @@ export default function IndexPage() {
         <div className="chat_messages">
           {messages?.data ? (
             <div className="messages_container" ref={messagesContainer}>
-              {
-                // @ts-ignore
-                messages?.data?.map((message: Message) => {
-                  return (
-                    <div key={message._id}>
-                      <MessageBubble message={message} />
-                    </div>
-                  );
-                })
-              }
+              {messages?.data?.map((message) => {
+                return (
+                  <div key={message._id}>
+                    <MessageBubble message={message} />
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <p>Loading...</p>
