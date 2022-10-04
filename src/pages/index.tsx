@@ -1,13 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { trpc } from '../utils/trpc';
 import MessageBubble from '../components/MessageBubble';
-
-interface Message {
-  _id: string;
-  message: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import type { Message } from '../types/Message';
 
 interface Messages {
   data: Message[] | undefined;

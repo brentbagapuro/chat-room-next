@@ -1,11 +1,5 @@
 import moment from 'moment';
-
-interface Message {
-  _id: string;
-  message: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import type { Message } from '../types/Message';
 
 type Props = {
   message: Message;
